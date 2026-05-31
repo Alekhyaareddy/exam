@@ -3,15 +3,22 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
+        stage('Checkout') {
             steps {
                 git 'https://github.com/Alekhyaareddy/exam'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Docker Build') {
             steps {
                 bat 'docker build -t exam-image .'
+            }
+        }
+
+        stage('Check Kubernetes') {
+            steps {
+                bat 'kubectl cluster-info'
+                bat 'kubectl get nodes'
             }
         }
 
