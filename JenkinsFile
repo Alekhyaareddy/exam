@@ -19,7 +19,7 @@ pipeline {
             steps {
                 bat '''
                 kubectl version --client
-                kubectl get nodes
+                kubectl --kubeconfig=C:\\Users\\Alekhya\\.kube\\config get nodes
                 '''
             }
         }
@@ -27,10 +27,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 bat '''
-                set KUBECONFIG=C:\\Users\\Alekhya\\.kube\\config
-                kubectl apply -f k8s/ --validate=false
+                kubectl --kubeconfig=C:\\Users\\Alekhya\\.kube\\config apply -f k8s/ --validate=false
                 '''
             }
         }
+
     }
 }
