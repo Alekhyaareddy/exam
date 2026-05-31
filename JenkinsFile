@@ -3,13 +3,13 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
                 git 'https://github.com/Alekhyaareddy/exam'
             }
         }
 
-        stage('Docker Build') {
+        stage('Build Docker Image') {
             steps {
                 bat 'docker build -t exam-image .'
             }
@@ -17,15 +17,17 @@ pipeline {
 
         stage('Check Kubernetes') {
             steps {
+                bat 'kubectl version --client'
                 bat 'kubectl cluster-info'
                 bat 'kubectl get nodes'
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl apply -f k8s/'
+                bat 'kubectl --kubeconfig=C:\\Users\\Alekhya\\.kube\\config apply -f k8s/'
             }
         }
+
     }
 }
