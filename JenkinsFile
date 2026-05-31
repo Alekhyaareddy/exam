@@ -15,17 +15,16 @@ pipeline {
             }
         }
 
-        stage('Check Kubernetes') {
+        stage('Kubernetes Check') {
             steps {
                 bat 'kubectl version --client'
-                bat 'kubectl cluster-info'
                 bat 'kubectl get nodes'
             }
         }
 
-        stage('Deploy to Kubernetes') {
+        stage('Deploy') {
             steps {
-                bat 'kubectl --kubeconfig=C:\\Users\\Alekhya\\.kube\\config apply -f k8s/'
+                bat 'kubectl --kubeconfig=C:\\Users\\Alekhya\\.kube\\.config apply -f k8s/'
             }
         }
 
