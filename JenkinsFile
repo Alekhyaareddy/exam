@@ -3,9 +3,9 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
+        stage('Checkout Repository') {
             steps {
-                git 'https://github.com/Alekhyaareddy/exam'
+                git branch: 'master', url: 'https://github.com/Alekhyaareddy/exam'
             }
         }
 
@@ -17,16 +17,20 @@ pipeline {
 
         stage('Kubernetes Check') {
             steps {
-                bat 'kubectl version --client'
-                bat 'kubectl get nodes'
+                bat '''
+                kubectl version --client
+                kubectl get nodes
+                '''
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl --kubeconfig=C:\\Users\\Alekhya\\.kube\\.config apply -f k8s/'
+                bat '''
+                set KUBECONFIG=C:\\Users\\Alekhya\\.kube\\config
+                kubectl apply -f k8s/ --validate=false
+                '''
             }
         }
-
     }
 }
